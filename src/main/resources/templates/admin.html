@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Welcome admin</h1>
+<br>
+<br>
+<h2>add category</h2>
+<form action="/category/save" method="post" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Category name">
+    <input type="file" name="image" >
+    <input type="submit" value="add category">
+</form>
+<br><br>
+
+<table border="1">
+    <thead>
+    <th>id</th>
+    <th>name</th>
+    <th>image</th>
+    <th>update</th>
+    <th>delete</th>
+    </thead>
+    <tbody th:each="category : ${allCats}">
+        <td th:text="${category.id}"></td>
+        <td th:text="${category.name}"></td>
+        <td th:text="${category.picUrl}"></td>
+        <td><a th:href="@{/category/get(id=${category.id})}">update</a></td>
+        <td><a th:href="@{/category/delete(id=${category.id})}">delete</a></td>
+    </tbody>
+</table>
+
+<br>
+<br>
+<h2>add image</h2>
+<form action="/image/save" method="post" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Image name">
+    <select name="category.id">
+        <option disabled selected value>Choose image category</option>
+        <option th:each="category : ${allCats}" th:value="${category.id}" th:text="${category.name}"></option>
+    </select>
+    <input type="file" name="image">
+    <input type="submit" value="add image">
+</form>
+
+<br><br>
+
+<table border="1">
+    <thead>
+    <th>id</th>
+    <th>name</th>
+    <th>image</th>
+    <th>created date</th>
+    <th>category</th>
+    <th>update</th>
+    <th>delete</th>
+    </thead>
+    <tbody th:each="image : ${allImgs}">
+    <td th:text="${image.id}"></td>
+    <td th:text="${image.name}"></td>
+    <td th:text="${image.picUrl}"></td>
+    <td th:text="${image.createdDate}"></td>
+    <td th:text="${image.category.name}"></td>
+    <td><a th:href="@{/image/get(id=${image.id})}">update</a></td>
+    <td><a th:href="@{/image/delete(id=${image.id})}">delete</a></td>
+    </tbody>
+</table>
+</body>
+</html>

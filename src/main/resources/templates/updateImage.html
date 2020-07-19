@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>update image</h2>
+<form action="/image/save" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" th:value="${imgById.id}">
+    <input type="text" name="name" th:value="${imgById.name}">
+    <select name="category.id">
+        <option th:each="category : ${allCats}" th:value="${category.id}"
+                th:text="${category.name}" th:selected="${category.id == imgById.category.id}"></option>
+    </select>
+    <input type="file" name="image" th:value="${imgFolder} + ${imgById.picUrl}">
+    <input type="submit" value="update image">
+</form>
+</body>
+</html>
