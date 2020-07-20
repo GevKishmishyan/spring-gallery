@@ -37,7 +37,6 @@ public class ImageController {
     @GetMapping("/get")
     public String getImage(@RequestParam("id") int id, ModelMap modelMap){
         modelMap.addAttribute("imgById", imageService.getImage(id));
-        modelMap.addAttribute("imgFolder", "E:\\Projects\\Spring\\spring-gallery\\uploads\\");
         modelMap.addAttribute("allCats", categoryService.allCatList());
         return "updateImage";
     }

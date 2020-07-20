@@ -40,7 +40,6 @@ public class CategoryContoller {
     @GetMapping("/get")
     public String getImage(@RequestParam("id") int id, ModelMap modelMap){
         modelMap.addAttribute("catById", categoryService.getCategory(id));
-        modelMap.addAttribute("imgFolder", "E:\\Projects\\Spring\\spring-gallery\\uploads\\");
         return "updateCategory";
     }
 
