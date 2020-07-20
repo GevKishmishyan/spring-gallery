@@ -24,11 +24,25 @@ public class CategoryService {
     private final ImageRepository imageRepository;
 
     public void save(Category category, MultipartFile file) throws IOException {
-        String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        File image = new File(uploadDir, name);
-        file.transferTo(image);
-        category.setPicUrl(name);
+        if (category.getId() == 0) {
+            String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            File upImage = new File(uploadDir, name);
+            file.transferTo(upImage);
+            category.setPicUrl(name);
+        } else {
+            Category updatedCat = categoryRepository.getOne(category.getId());
+            if (file.isEmpty()){
+                category.setPicUrl(updatedCat.getPicUrl());
+            } else {
+                String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                File upImage = new File(uploadDir, name);
+                file.transferTo(upImage);
+                category.setPicUrl(name);
+            }
+        }
+
         categoryRepository.save(category);
+
     }
 
     public void deleteCategory(int id){

@@ -24,18 +24,31 @@ public class ImageService {
     private final ImageRepository imageRepository;
 
     public void save(Image image, MultipartFile file) throws IOException {
-        String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        File upImage = new File(uploadDir, name);
-        file.transferTo(upImage);
-        image.setPicUrl(name);
+        if (image.getId() == 0) {
+            String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            File upImage = new File(uploadDir, name);
+            file.transferTo(upImage);
+            image.setPicUrl(name);
+        } else {
+            Image updatedImg = imageRepository.getOne(image.getId());
+            if (file.isEmpty()){
+                image.setPicUrl(updatedImg.getPicUrl());
+            } else {
+                String name = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                File upImage = new File(uploadDir, name);
+                file.transferTo(upImage);
+                image.setPicUrl(name);
+            }
+        }
+
         imageRepository.save(image);
     }
 
-    public List<Image> imagesByCategory(int id){
+    public List<Image> imagesByCategory(int id) {
         return imageRepository.findAllByCategory_Id(id);
     }
 
-    public void deleteImage(int id){
+    public void deleteImage(int id) {
         imageRepository.deleteById(id);
     }
 
