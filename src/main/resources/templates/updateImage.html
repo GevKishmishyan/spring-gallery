@@ -13,7 +13,7 @@
         <option th:each="category : ${allCats}" th:value="${category.id}"
                 th:text="${category.name}" th:selected="${category.id == imgById.category.id}"></option>
     </select>
-    <input type="file" name="image" th:value="${imgFolder} + ${imgById.picUrl}">
+    <input type="file" name="image">
     <input type="submit" value="update image">
 </form>
 </body>
